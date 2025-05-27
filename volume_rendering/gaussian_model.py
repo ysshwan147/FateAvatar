@@ -192,7 +192,8 @@ class GaussianModel(torch.nn.Module):
         # All channels except the 3 DC
         for i in range(self._features_dc.shape[1]*self._features_dc.shape[2]):
             l.append('f_dc_{}'.format(i))
-        for i in range(self._features_rest.shape[1]*self._features_rest.shape[2]):
+        # for i in range(self._features_rest.shape[1]*self._features_rest.shape[2]):
+        for i in range(45):
             l.append('f_rest_{}'.format(i))
         l.append('opacity')
         for i in range(self._scaling.shape[1]):
@@ -211,6 +212,10 @@ class GaussianModel(torch.nn.Module):
         opacities = self._opacity.detach().cpu().numpy()
         scale = self._scaling.detach().cpu().numpy()
         rotation = self._rotation.detach().cpu().numpy()
+
+        # modified
+        f_rest_dim = 45
+        f_rest = np.zeros((xyz.shape[0], sh_dim), dtype=np.float32)
 
         dtype_full = [(attribute, 'f4') for attribute in self.construct_list_of_attributes()]
 

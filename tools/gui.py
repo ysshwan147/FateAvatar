@@ -700,6 +700,32 @@ class Viewer:
         dpg.set_value("_texture",
                       self.buffer_image)  # buffer must be contiguous, else seg fault!
 
+
+    def save_ply(self):
+        if not self.need_update:
+            return
+
+        # if self.need_update:
+        if self.orbit_cam['use']:
+            pose = orbit_camera(self.orbit_cam['elevation'], self.orbit_cam['azimuth'],
+                                self.orbit_cam['radius'])
+            self.mouse_cam.rot = R.from_matrix(pose[:3, :3])
+            self.mouse_cam.radius = np.linalg.norm(pose[:3, 3])
+
+        pose = self.mouse_cam.pose
+
+        rot = matrix_to_axis_angle(
+            torch.tensor(pose[:3, :3], device=self.device, dtype=torch.float32))
+        self.pose_render = self.pose.clone()
+        self.pose_render[0, :3] -= rot
+
+        self.model.save_ply(
+            expression=self.expr,
+            flame_pose=self.pose_render,
+            path=os.path.join(self.cfg.workspace, "ply", "render.ply")
+        )
+
+
     def render(self):
         while dpg.is_dearpygui_running():
             if self.current_mode != 'manual':

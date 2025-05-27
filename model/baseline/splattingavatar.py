@@ -7,7 +7,7 @@ import torch.nn.functional as F
 from flame.FLAME import FLAME
 
 from simple_knn._C      import distCUDA2
-from simple_phongsurf   import PhongSurfacePy3d
+# from simple_phongsurf   import PhongSurfacePy3d
 
 from pytorch3d.transforms import quaternion_multiply
 import pytorch3d.structures.meshes as py3d_meshes

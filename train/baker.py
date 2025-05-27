@@ -746,6 +746,73 @@ class UVEditor(Trainer):
         save_image_grid(vflip(texture_dict['color']).detach().cpu().numpy(), save_tex_path, drange=[-1.78, 1.78], grid_size=(1, 1))
 
 
+    def style_transfer_pytorch(self, transfer_model: str):
+
+        texture_dict_list = sorted(glob.glob(f'{self.media_save_path["dump_texture"]["folder"]}/*.pth'))
+        texture_dict_path = texture_dict_list[-1]
+
+        texture_dict = self.texture_load(texture_dict_path)
+
+        # active color for editing
+        texture_dict['color'] = UVDecoder._color_activation(texture_dict['color'])
+
+        self.apply_style_transfer_pytorch(
+            texture_dict,
+            model_path      = os.path.join(self.media_save_path["edit_assets"]["style_transfer"], f"{transfer_model}.model"),
+            save_tex_path   = os.path.join(self.media_save_path["edit_assets"]["style_transfer"], f"{transfer_model}.png")
+        )
+
+        self.run_animation(
+            texture_dict = texture_dict,
+            save_name    = transfer_model
+        )
+
+        self.export_avatar_model(
+            texture_dict = texture_dict,
+            name    = transfer_model
+        )
+
+    @staticmethod
+    def apply_style_transfer_pytorch(
+            texture_dict: dict,
+            model_path: str,
+            save_tex_path: str
+        ):
+        from tools.style_transfer_model import TransformerNet
+
+        device = texture_dict['color'].device
+
+        # 1. color_tex: [-1, 1] → [0, 1]
+        color_tex = (texture_dict['color'] * (C0 / 0.5) + 1) / 2
+        # color_tex = texture_dict['color'] * (C0 / 0.5)
+
+        # 2. → [0, 255]
+        input_tensor = color_tex * 255
+
+        # 스타일 모델 로드
+        model = TransformerNet().to(device)
+        model.load_state_dict(torch.load(model_path))
+        model.eval()
+
+        with torch.no_grad():
+            if input_tensor.ndim == 3:
+                input_tensor = input_tensor.unsqueeze(0)
+            output_tensor = model(input_tensor)
+            output_tensor = output_tensor.clamp(0, 255) / 255.0
+
+        # 후처리: FATE의 범위로 다시 변환
+        output_tensor = ((output_tensor - 0.5) * 2) * (0.5 / C0)
+        texture_dict['color'] = output_tensor.to(device)
+
+        os.makedirs(os.path.dirname(save_tex_path), exist_ok=True)
+        save_image_grid(
+            vflip(texture_dict['color']).detach().cpu().numpy(),
+            save_tex_path,
+            drange=[-1.78, 1.78],
+            grid_size=(1, 1)
+        )
+
+
 # ------------------------------------------------------------------------------- #
 
 

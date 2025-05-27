@@ -365,6 +365,58 @@ class FateAvatar(nn.Module):
 
         return render_image[0]
     
+
+    def save_ply(self, expression, flame_pose, path):
+
+        bs = flame_pose.shape[0]    # 1, essentially
+
+        #-------------------------------    prepare splats position     -------------------------------#
+
+        verts, _, _ = self.flame.forward_with_delta_blendshape(
+            expression_params   = expression,
+            full_pose           = flame_pose,
+            delta_shapedirs     = self.delta_shapedirs if self.cfg_model.delta_blendshape else None,
+            delta_posedirs      = self.delta_posedirs if self.cfg_model.delta_blendshape else None,
+            delta_vertex        = self.delta_vertex if self.cfg_model.delta_vertex else None
+        )
+
+        face_orien_mat, face_scaling    = compute_face_orientation(verts, self.faces, return_scale=True)
+        face_normals                    = compute_face_normals(verts, self.faces)
+
+        scaling_ratio       = face_scaling / self.face_scaling_canonical
+        flame_scaling_ratio = scaling_ratio[:, self.face_index]
+
+        flame_orien_mat     = face_orien_mat[:, self.face_index]
+        flame_orien_quat    = matrix_to_quaternion(flame_orien_mat)
+        flame_normals       = face_normals[:, self.face_index]
+
+        pos_val = reweight_verts_by_barycoords(
+            verts         = verts,
+            faces         = self.faces,
+            face_index    = self.face_index,
+            bary_coords   = self.bary_coords
+        )
+
+        #-------------------------------    render gaussian     -------------------------------#
+
+        gaussian = GaussianModel(sh_degree = 0)
+
+        # dummy loop
+        for bs_ in range(bs):
+            gaussian._features_dc   = self._features_dc
+            gaussian._features_rest = self._features_rest
+            gaussian._opacity       = self._opacity
+            gaussian._scaling       = (self._scaling + torch.log(flame_scaling_ratio[bs_])) if self.cfg_model.resize_scale else self._scaling
+            gaussian._rotation      = quaternion_multiply(flame_orien_quat[bs_], self._rotation)
+            gaussian._xyz           = pos_val[bs_] + flame_normals[bs_] * self.shell_len * torch.tanh(self._offset)
+
+            gaussian.save_ply(path)
+
+            return True
+            
+        return False
+
+
     @torch.no_grad()
     def visualization(self, input):
 

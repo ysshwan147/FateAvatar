@@ -23,6 +23,7 @@ if __name__ == "__main__":
     parser.add_argument('--workspace',  type=str,           required=True)
     parser.add_argument('--name',       type=str,           required=True)
     parser.add_argument('--root_path',  type=str,           required=True)
+    parser.add_argument('--style_name',  type=str,           required=True)
     parser.add_argument('--device',     type=torch.device,  default=torch.device('cuda:0' if torch.cuda.is_available() else 'cpu'))
     parser.add_argument('--seed',       type=int,           default=42)
     parser.add_argument('--bg_color',   type=str,           default='white')
@@ -118,7 +119,7 @@ if __name__ == "__main__":
     )
 
     # ----------------------------  editing ---------------------------- #
-    editor.sticker_editing(sticker_name='lty')
-    editor.style_transfer(transfer_mdoel='the_wave')
-
+    # editor.sticker_editing(sticker_name='lty')
+    # editor.style_transfer(transfer_mdoel='the_wave')
+    editor.style_transfer_pytorch(transfer_mdoel=opt.style_name)
     
