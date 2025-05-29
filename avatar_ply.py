@@ -17,6 +17,7 @@ if __name__ == "__main__":
     parser.add_argument('--model_name', choices=ModelCallbacks.keys(),  required=True)
     parser.add_argument('--workspace',  type=str,                       required=True)
     parser.add_argument('--name',       type=str,                       required=True)
+    parser.add_argument('--subject',    type=str,                       required=True)
     parser.add_argument('--device',     type=torch.device,              default=torch.device('cuda:0' if torch.cuda.is_available() else 'cpu'))
     parser.add_argument('--seed',       type=int,                       default=42)
     parser.add_argument('--bg_color',   type=str,                       default='white')
@@ -80,5 +81,5 @@ if __name__ == "__main__":
     avatar = loader.model
 
     avatar.save_ply(
-        os.path.join(opt.workspace, "ply", "avatar.ply")
+        os.path.join(opt.workspace, "ply", f"{opt.subject}.ply")
     )

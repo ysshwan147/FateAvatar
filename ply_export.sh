@@ -17,5 +17,6 @@ python avatar_ply.py \
 	--workspace $EXP_DIR \
 	--name $EXP_NAME \
 	--ckpt_path $CKPT_PATH \
+	--subject $SUBJECT \
     --use_baked_resume
 	# --use_full_head_resume \
