@@ -1,8 +1,12 @@
+SUBJECT="empty"
+
+if [ -n "$1" ]; then SUBJECT=${1}; fi
+
 MODEL_NAME="FateAvatar"
 CONFIG_PATH="./config/fateavatar.yaml"
-DATASET_PATH="./data/insta/ysh"
-EXP_DIR="./workspace/insta/ysh"
-EXP_NAME="fateavatar_insta_ysh"
+DATASET_PATH="./data/insta/$SUBJECT"
+EXP_DIR="./workspace/insta/$SUBJECT"
+EXP_NAME="fateavatar_insta_$SUBJECT"
 
 python train_mono_avatar.py --model_name $MODEL_NAME --config $CONFIG_PATH --root_path $DATASET_PATH \
     --workspace $EXP_DIR --name $EXP_NAME

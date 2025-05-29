@@ -48,7 +48,8 @@ For compatibility reasons, we recommend running this repository in Linux. Instal
 
   ```
   # for completion framework
-  pip install cmake dlib
+  apt install cmake
+  pip install dlib
   
   cd submodules/3DDFA_V2
   bash build.sh	# you may need install manually in Win10
@@ -65,6 +66,7 @@ For compatibility reasons, we recommend running this repository in Linux. Instal
   # [Optional] for splattingavatar baseline
   pip install libigl packaging pybind11
   
+  # [Optional] for splattingavatar baseline
   cd submodules/simple_phongsurf
   pip install .
   cd ..

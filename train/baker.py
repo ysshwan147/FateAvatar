@@ -778,7 +778,9 @@ class UVEditor(Trainer):
             model_path: str,
             save_tex_path: str
         ):
-        from tools.style_transfer_model import TransformerNet
+        import sys
+        sys.path.append('../examples/fast_neural_style')
+        from neural_style.transformer_net import TransformerNet
 
         device = texture_dict['color'].device
 

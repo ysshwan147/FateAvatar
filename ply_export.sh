@@ -1,9 +1,13 @@
+SUBJECT="empty"
+
+if [ -n "$1" ]; then SUBJECT=${1}; fi
+
 MODEL_NAME="FateAvatar"
 CONFIG_PATH="./config/fateavatar.yaml"
 
-EXP_DIR="./workspace/insta/ysh"
-EXP_NAME="fateavatar_insta_ysh"
-CKPT_PATH="./workspace/insta/fateavatar_insta_ysh/baking/edit/checkpoints_edited/mount.pth"
+EXP_DIR="./workspace/insta/$SUBJECT"
+EXP_NAME="fateavatar_insta_$SUBJECT"
+CKPT_PATH="./workspace/insta/fateavatar_insta_$SUBJECT/baking/edit/checkpoints_edited/mount.pth"
 
 
 python avatar_ply.py \

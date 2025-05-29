@@ -121,5 +121,5 @@ if __name__ == "__main__":
     # ----------------------------  editing ---------------------------- #
     # editor.sticker_editing(sticker_name='lty')
     # editor.style_transfer(transfer_mdoel='the_wave')
-    editor.style_transfer_pytorch(transfer_mdoel=opt.style_name)
+    editor.style_transfer_pytorch(transfer_model=opt.style_name)
     
