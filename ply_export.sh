@@ -7,7 +7,8 @@ CONFIG_PATH="./config/fateavatar.yaml"
 
 EXP_DIR="./workspace/insta/$SUBJECT"
 EXP_NAME="fateavatar_insta_$SUBJECT"
-CKPT_PATH="./workspace/insta/fateavatar_insta_$SUBJECT/baking/edit/checkpoints_edited/mount.pth"
+STYLE_NAME="mount"
+CKPT_PATH="$EXP_DIR/baking/edit/checkpoints_edited/$STYLE_NAME.pth"
 
 
 python avatar_ply.py \

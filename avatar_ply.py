@@ -79,12 +79,6 @@ if __name__ == "__main__":
     # overwrite
     avatar = loader.model
 
-    # ----------------------------  override config ---------------------------- #
-    gui = Viewer(
-        opt,
-        cfg,
-        avatar,
-        loader,
-        identity_dict
+    avatar.save_ply(
+        os.path.join(opt.workspace, "ply", "avatar.ply")
     )
-    gui.save_ply()

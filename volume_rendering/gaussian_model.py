@@ -215,7 +215,7 @@ class GaussianModel(torch.nn.Module):
 
         # modified
         f_rest_dim = 45
-        f_rest = np.zeros((xyz.shape[0], sh_dim), dtype=np.float32)
+        f_rest = np.zeros((xyz.shape[0], f_rest_dim), dtype=np.float32)
 
         dtype_full = [(attribute, 'f4') for attribute in self.construct_list_of_attributes()]
 

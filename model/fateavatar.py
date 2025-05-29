@@ -368,13 +368,13 @@ class FateAvatar(nn.Module):
 
     def save_ply(self, expression, flame_pose, path):
 
-        bs = flame_pose.shape[0]    # 1, essentially
+        bs = 1    # 1, essentially
 
         #-------------------------------    prepare splats position     -------------------------------#
 
         verts, _, _ = self.flame.forward_with_delta_blendshape(
-            expression_params   = expression,
-            full_pose           = flame_pose,
+            expression_params   = self.flame.canonical_exp,
+            full_pose           = self.flame.canonical_pose,
             delta_shapedirs     = self.delta_shapedirs if self.cfg_model.delta_blendshape else None,
             delta_posedirs      = self.delta_posedirs if self.cfg_model.delta_blendshape else None,
             delta_vertex        = self.delta_vertex if self.cfg_model.delta_vertex else None
