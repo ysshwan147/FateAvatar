@@ -10,3 +10,5 @@ data/imavatar
 
 workspace/insta
 workspace/imavatar
+
+__pycache__/
