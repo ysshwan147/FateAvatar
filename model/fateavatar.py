@@ -366,7 +366,7 @@ class FateAvatar(nn.Module):
         return render_image[0]
     
 
-    def save_ply(self, expression, flame_pose, path):
+    def save_ply(self, path):
 
         bs = 1    # 1, essentially
 
