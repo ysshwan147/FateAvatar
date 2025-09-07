@@ -308,7 +308,7 @@ python avatar_gui.py \
 @inproceedings{zhang2025fate,
       title={FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video}, 
       author={Zhang, Jiawei and Wu, Zijian and Liang, Zhiyang and Gong, Yicheng and Hu, Dongfang and Yao, Yao and Cao, Xun and Zhu, Hao},
-      journal={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}
+      booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}
       year={2025},
 }
 ```
