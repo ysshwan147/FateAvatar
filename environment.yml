@@ -3,6 +3,7 @@ channels:
   - pytorch
   - defaults
   - conda-forge
+  - nvidia
 dependencies:
   - pillow=9.4.0
   - pip=24.0
@@ -10,15 +11,16 @@ dependencies:
   - pysocks=1.7.1
   - python=3.8.19
   - python_abi=3.8
-  - pytorch=1.12.1
+  - pytorch==2.1.2
   - pytorch-mutex=1.0
   - requests=2.32.1
   - setuptools=69.5.1
   - sqlite=3.45.3
   - tbb=2021.12.0
   - tk=8.6.13
-  - torchaudio=0.12.1
-  - torchvision=0.13.1
+  - torchaudio=2.1.2
+  - torchvision=0.16.2
+  - pytorch-cuda=11.8
   - pip:
       - absl-py==2.1.0
       - addict==2.4.0

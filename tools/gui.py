@@ -162,6 +162,8 @@ class Viewer:
         self.model = avatar
         self.loader = loader
 
+        self.ply_save = False
+
         # displayed image size
         self.W = 800
         self.H = 800
@@ -269,6 +271,8 @@ class Viewer:
                 dpg.add_text("Infer time: ")
                 dpg.add_text("no data", tag="_log_infer_time")
 
+            dpg.add_text(f"number of points: {self.model._opacity.shape[0]}")
+
             def callback_setattr(sender, app_data, user_data):
                 setattr(self, user_data, app_data)
 
@@ -340,7 +344,7 @@ class Viewer:
 
                 dpg.add_slider_float(
                     label="radius",
-                    min_value=1.0,
+                    min_value=0.5,
                     max_value=10.0,
                     format="%.2f",
                     default_value=self.orbit_cam['radius'],
@@ -386,7 +390,7 @@ class Viewer:
                 dpg.add_text(f'Joints')
                 self.pose_sliders = []
                 for joint in ['root', 'neck', 'jaw', 'left_eyes', 'right_eyes']:
-                    max_rot = 0.10 if 'eyes' in joint else 0.30
+                    max_rot = 0.50 if 'eyes' in joint else 0.30
                     with dpg.group(horizontal=True):
                         dpg.add_slider_float(min_value=-max_rot, max_value=max_rot,
                                              format="%.2f",
@@ -421,7 +425,7 @@ class Viewer:
                 # Randomly select 10 expressions out of 50
                 # expr_rand = sorted(random.sample(range(0, 49), 10))
                 expr_rand = range(0, 10)
-                max_expr = 1.5
+                max_expr = 3.0
                 for i in expr_rand:
                     dpg.add_slider_float(label=f"{i}", min_value=-max_expr, max_value=max_expr,
                                          format="%.4f", default_value=self.expr[0, i],
@@ -678,6 +682,15 @@ class Viewer:
             flame_pose  = self.pose_render,
             camera      = cur_cam
         )
+
+        if self.ply_save:
+            self.model.save_ply(
+                expression=self.expr,
+                flame_pose=self.pose_render,
+                path=os.path.join(self.cfg.workspace, "ply", "render.ply")
+            )
+
+            self.ply_save = False
 
         self.buffer_image = (
             out.permute(1, 2, 0)
