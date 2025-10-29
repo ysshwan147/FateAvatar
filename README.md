@@ -2,11 +2,11 @@
 
 Code for "FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video" (FateAvatar).
 
-[Jiawei Zhang](https://zjwsite.github.io/)<sup>1</sup>, [Zijian Wu](https://github.com/Zijian-Wu)<sup>1</sup>, [Zhiyang Liang](https://github.com/ZhiyangLiang?tab=repositories)<sup>1</sup>, [Yicheng Gong](https://github.com/Gong-Yicheng)<sup>1</sup>, [Dongfang Hu]()<sup>2</sup>, [Yao Yao](https://yoyo000.github.io/)<sup>1</sup>, [Xun Cao](https://cite.nju.edu.cn/People/Faculty/20190621/i5054.html)<sup>1</sup>, and [Hao Zhu](http://zhuhao.cc/home/)<sup>1+</sup>
+[Jiawei Zhang](https://zjwsite.github.io/)`<sup>`1`</sup>`, [Zijian Wu](https://github.com/Zijian-Wu)`<sup>`1`</sup>`, [Zhiyang Liang](https://github.com/ZhiyangLiang?tab=repositories)`<sup>`1`</sup>`, [Yicheng Gong](https://github.com/Gong-Yicheng)`<sup>`1`</sup>`, [Dongfang Hu]()`<sup>`2`</sup>`, [Yao Yao](https://yoyo000.github.io/)`<sup>`1`</sup>`, [Xun Cao](https://cite.nju.edu.cn/People/Faculty/20190621/i5054.html)`<sup>`1`</sup>`, and [Hao Zhu](http://zhuhao.cc/home/)`<sup>`1+`</sup>`
 
-<sup>1</sup>Nanjing University, <sup>2</sup>OPPO
+`<sup>`1`</sup>`Nanjing University, `<sup>`2`</sup>`OPPO
 
-<sup>+</sup>corresponding author
+`<sup>`+`</sup>`corresponding author
 
 [[Paper](https://arxiv.org/abs/2411.15604)] | [[中文文档](./doc-CN/README.md)] | [[Project Page](https://zjwfufu.github.io/FATE-page/)]
 
@@ -24,10 +24,9 @@ For compatibility reasons, we recommend running this repository in Linux. Instal
 
   ```
   git clone https://github.com/zjwfufu/FateAvatar.git --recursive
-  
+
   conda env create -f environment.yml
   ```
-
 - Install 3DGS dependencies
 
   ```
@@ -36,20 +35,19 @@ For compatibility reasons, we recommend running this repository in Linux. Instal
   pip install ./simple-knn
   cd ..
   ```
-
 - Install PyTorch3D (We use PyTorch3D 0.7.7 in experiment)
 
   ```
   git clone https://github.com/facebookresearch/pytorch3d.git
   cd pytorch3d && pip install .
   ```
-
 - Some functional dependencies
 
   ```
   # for completion framework
-  pip install cmake dlib
-  
+  apt install cmake
+  pip install dlib
+
   cd submodules/3DDFA_V2
   bash build.sh	# you may need install manually in Win10
   cd ..
@@ -58,30 +56,28 @@ For compatibility reasons, we recommend running this repository in Linux. Instal
   cd submodules/nvdiffrast
   pip install .
   cd ..
-  
+
   # [Optional] for monogaussianavatar baseline
   pip install functorch==0.2.0
-  
+
   # [Optional] for splattingavatar baseline
   pip install libigl packaging pybind11
-  
   cd submodules/simple_phongsurf
   pip install .
   cd ..
   ```
-
 - Download weights
 
-  | Model                        | Links                                                        |
-  | ---------------------------- | ------------------------------------------------------------ |
-  | FLAME2020                    | [generic_model.pkl](https://flame.is.tue.mpg.de/)            |
+  | Model                        | Links                                                                                                                                                           |
+  | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | FLAME2020                    | [generic_model.pkl](https://flame.is.tue.mpg.de/)                                                                                                                  |
   | SphereHead                   | [spherehead-ckpt-025000.pkl](https://cuhko365-my.sharepoint.com/:u:/g/personal/223010106_link_cuhk_edu_cn/EUU4STpe1p5HhLKIYgxuN6YBWNxVKac0WCXzoDLSJPn4RA?e=pOyGkK) |
-  | GFPGAN1.3                    | [GFPGANv1.3.pth](https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.3.pth) |
-  | VGG16 for Perpetual Loss     | [vgg16.pt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/metrics/vgg16.pt) |
-  | Landmark Detection from Dlib | [shape_predictor_68_face_landmarks.dat](https://github.com/italojs/facial-landmarks-recognition/blob/master/shape_predictor_68_face_landmarks.dat) |
-  | MODNet                       | [modnet_webcam_portrait_matting.ckpt](https://drive.google.com/drive/folders/1umYmlCulvIFNaqPjwod1SayFmSRHziyR) |
-  | Face Parsing                 | [79999_iter.pth](https://drive.google.com/file/d/154JgKpzCPW82qINcVieuPH3fZ2e0P812/view?usp=drive_open) |
-  | Parsing Net                  | [parsing_parsenet.pth](https://github.com/sczhou/CodeFormer/releases/download/v0.1.0/parsing_parsenet.pth) |
+  | GFPGAN1.3                    | [GFPGANv1.3.pth](https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.3.pth)                                                                     |
+  | VGG16 for Perpetual Loss     | [vgg16.pt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/metrics/vgg16.pt)                                                                     |
+  | Landmark Detection from Dlib | [shape_predictor_68_face_landmarks.dat](https://github.com/italojs/facial-landmarks-recognition/blob/master/shape_predictor_68_face_landmarks.dat)                 |
+  | MODNet                       | [modnet_webcam_portrait_matting.ckpt](https://drive.google.com/drive/folders/1umYmlCulvIFNaqPjwod1SayFmSRHziyR)                                                    |
+  | Face Parsing                 | [79999_iter.pth](https://drive.google.com/file/d/154JgKpzCPW82qINcVieuPH3fZ2e0P812/view?usp=drive_open)                                                            |
+  | Parsing Net                  | [parsing_parsenet.pth](https://github.com/sczhou/CodeFormer/releases/download/v0.1.0/parsing_parsenet.pth)                                                         |
 
 ## Data
 
@@ -110,8 +106,7 @@ We use publicly available datasets from [INSTA](https://github.com/Zielon/INSTA)
 
 [2025/5/18 Update] We provide the script `run_nersemble_benchmark.sh` for the [NeRSemble Benchmark](https://kaldir.vc.in.tum.de/nersemble_benchmark/benchmark/mono_flame_avatar). If you would like to try it out, you may need to run `pip install nersemble_benchmark` and place `FLAME2023.pkl` along with the two vertex index files into the `./weights` directory.
 
-
-##  Pretrained
+## Pretrained
 
 ~~*We will release the pretrained models and checkpoints soon.*~~
 
@@ -132,26 +127,22 @@ python train_mono_avatar.py \
 - `--model_name`
 
   The head avatar reconstruction methods we provide are: `["FateAvatar", "GaussianAvatars", "FlashAvatar", "SplattingAvatar", "MonoGaussianAvatar"]`.
-
 - `--config`
 
   The configuration files can be found in the `./config`, where we provide YAML files for each method.
-
 - `--root_path`
 
   The dataset path, please ensure that the path string includes `imavatar` or `insta` to specify which dataset type to be loaded.
-
 - `--workspace`
 
   The experiment save path. Training logs, snapshots, checkpoints, and various media will be organized under this directory.
-
 - `--name`
 
-​	The identifier for each experiment.
+    The identifier for each experiment.
 
 - `--resume`
 
-​	Enable to train from existing checkpoint from `workspace`.
+    Enable to train from existing checkpoint from`workspace`.
 
 Generate pseudo data from the completion framework using the following command:
 
@@ -242,9 +233,8 @@ python avatar_reenact.py \
 ```
 
 - `--root_path`:
-  
-  Path to the source head avatar dataset.
 
+  Path to the source head avatar dataset.
 - `--dst_path`:
 
   Path to the target head avatar dataset.
@@ -269,15 +259,15 @@ python avatar_gui.py \
 
 - `--ckpt_path`:
 
-​	If `ckpt_path` is provided, it will load the checkpoint from the specified path.
+    If`ckpt_path` is provided, it will load the checkpoint from the specified path.
 
 - `--use_full_head_resume`:
 
-​	If is True, it will automatically load full-head checkpoints from `--workspace`.
+    If is True, it will automatically load full-head checkpoints from`--workspace`.
 
 - `--use_baked_resume`:
 
-​	If is True, it will load baked checkpoints from `--workspace`. When both `use_full_head_resume` and `use_baked_resume` are True, it will load the full-head checkpoint after neural baking (if it exists). 
+    If is True, it will load baked checkpoints from`--workspace`. When both `use_full_head_resume` and `use_baked_resume` are True, it will load the full-head checkpoint after neural baking (if it exists).
 
 #### Full-head completion
 
@@ -296,7 +286,6 @@ python avatar_gui.py \
 <div align=center>
   <img src="./assets/the_wave.gif">
 </div>
-
 
 ## Acknowledgement
 

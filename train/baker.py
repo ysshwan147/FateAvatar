@@ -681,7 +681,7 @@ class UVEditor(Trainer):
         os.makedirs(os.path.dirname(save_tex_path), exist_ok=True)
         save_image_grid(vflip(texture_dict['color']).detach().cpu().numpy(), save_tex_path, drange=[-1.78, 1.78], grid_size=(1, 1))
 
-    def style_transfer(self, transfer_mdoel: str):
+    def style_transfer(self, transfer_model: str):
 
         texture_dict_list = sorted(glob.glob(f'{self.media_save_path["dump_texture"]["folder"]}/*.pth'))
         texture_dict_path = texture_dict_list[-1]
@@ -693,18 +693,18 @@ class UVEditor(Trainer):
 
         self.apply_style_transfer(
             texture_dict,
-            model_path      = os.path.join(self.media_save_path["edit_assets"]["style_transfer"], f"{transfer_mdoel}.t7"),
-            save_tex_path   = os.path.join(self.media_save_path["edit_assets"]["style_transfer"], f"{transfer_mdoel}.png")
+            model_path      = os.path.join(self.media_save_path["edit_assets"]["style_transfer"], f"{transfer_model}.t7"),
+            save_tex_path   = os.path.join(self.media_save_path["edit_assets"]["style_transfer"], f"{transfer_model}.png")
         )
 
         self.run_animation(
             texture_dict = texture_dict,
-            save_name    = transfer_mdoel
+            save_name    = transfer_model
         )
 
         self.export_avatar_model(
             texture_dict = texture_dict,
-            name    = transfer_mdoel
+            name    = transfer_model
         )
 
     @staticmethod

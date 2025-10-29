@@ -7,7 +7,7 @@ import torch.nn.functional as F
 from flame.FLAME    import FLAME
 
 from pytorch3d.ops  import knn_points
-from functorch      import jacfwd, vmap
+# from functorch      import jacfwd, vmap
 
 from volume_rendering.camera_3dgs       import Camera
 from diff_gaussian_rasterization        import GaussianRasterizationSettings, GaussianRasterizer
